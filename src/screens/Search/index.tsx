@@ -81,7 +81,7 @@ const FakeData = [
 const Search: React.FC<Props> = () => {
     return (
         <View>
-            <TextInput value={'oil'} onChange={() => console.log('change')} label={'Введите название ресторана'} />
+            <TextInput value={'oil'} onChange={() => console.log('change')} placeholder={'Введите название ресторана'} />
             <FlatList
                 contentContainerStyle={{paddingBottom:15}}
                 data={FakeData}
