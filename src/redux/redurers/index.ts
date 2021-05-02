@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import authReducer from "./auth"
+import authReducer from "./sessionReducer"
 
 let reducers = combineReducers({
     auth: authReducer

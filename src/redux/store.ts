@@ -1,9 +1,17 @@
-import { compose, applyMiddleware, createStore } from "redux";
+import {compose, applyMiddleware, createStore, combineReducers} from "redux";
 import thunk from "redux-thunk"
-// import storage from "redux-persist/lib/storage";
+import { ThunkAction} from "redux-thunk";
+import { Action } from "redux";
 import AsyncStorage from '@react-native-community/async-storage';
 import { persistStore, persistReducer } from "redux-persist"
-import reducer from "./redurers/index"
+import auth from "./redurers/sessionReducer";
+import { reducer as formReducer } from "redux-form"
+
+let rootReducer = combineReducers({
+    auth: auth,
+    form: formReducer
+})
+export type RootState = ReturnType<typeof rootReducer>
 
 
 const persistConfig = {
@@ -13,11 +21,15 @@ const persistConfig = {
 
 const middlewares = [thunk]
 
-export default function configureStore() {
-    const enhancer = compose(applyMiddleware(...middlewares));
-    const persistedReducer = persistReducer(persistConfig, reducer);
-    const store = createStore(persistedReducer, enhancer);
-    //@ts-ignore
-    const persistor = persistStore(store);
-    return { store, persistor };
-}
+const enhancer = compose(applyMiddleware(...middlewares))
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = createStore(persistedReducer, enhancer)
+
+export const persistor = persistStore(store)
+
+export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
+
+export default store;
