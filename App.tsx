@@ -11,7 +11,7 @@ export default function App() {
         <Provider store={configureStore().store} >
           <PersistGate loading={null} persistor={configureStore().persistor}>
             <View style={styles.container}>
-              <Text>star1t</Text>
+              <Text>start again</Text>
               <StatusBar style="auto" />
             </View>
           </PersistGate>
