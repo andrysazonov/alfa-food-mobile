@@ -1,5 +1,5 @@
 import React from "react"
-import { FlatList, View, TextInput } from "react-native"
+import {FlatList, View, TextInput, ScrollView} from "react-native"
 
 import RestaurantCard from "../../components/RestaurantCard"
 
@@ -10,7 +10,7 @@ interface Props {}
 
 const FakeData = [
     {
-        id: 'erer',
+        id: 'erer333',
         title: 'Delmar',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci facilisi ultrices rhoncus, nunc nulla sit at semper a.',
         rating: 10
@@ -81,13 +81,18 @@ const FakeData = [
 const Search: React.FC<Props> = () => {
     return (
         <View>
-            <TextInput value={'oil'} onChange={() => console.log('change')} placeholder={'Введите название ресторана'} />
-            <FlatList
-                contentContainerStyle={{paddingBottom:15}}
-                data={FakeData}
-                keyExtractor={(item) => item.id}
-                renderItem={RestaurantCard}
-            />
+            <TextInput value={''} onChange={() => console.log('change')} placeholder={'Введите название ресторана'} />
+            {/*<FlatList*/}
+            {/*    contentContainerStyle={{paddingBottom:15}}*/}
+            {/*    data={FakeData}*/}
+            {/*    keyExtractor={(item) => item.id}*/}
+            {/*    renderItem={RestaurantCard}*/}
+            {/*/>*/}
+            <ScrollView>
+                {FakeData.map(data => (
+                    <RestaurantCard item={data}/>
+                ))}
+            </ScrollView>
         </View>
     )
 }

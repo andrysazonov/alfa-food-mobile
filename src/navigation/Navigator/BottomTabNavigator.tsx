@@ -38,8 +38,8 @@ const BottomTabNavigator = (): React.ReactElement => {
                 component={HomeNavigator}
                 options={{
                     tabBarLabel: 'Лента',
-                    tabBarIcon: () => (
-                        <TabBarIcon name="home" color={'red'} />
+                    tabBarIcon: ({color}) => (
+                        <TabBarIcon name="home" color={color} />
                     )
                 }}
             />
@@ -47,8 +47,8 @@ const BottomTabNavigator = (): React.ReactElement => {
                 name="search"
                 options={{
                     tabBarLabel: 'Поиск',
-                    tabBarIcon: () => (
-                        <TabBarIcon name="search" color={'red'} />
+                    tabBarIcon: ({color}) => (
+                        <TabBarIcon name="search" color={color} />
                     )
                 }}
                 component={SearchNavigator}
@@ -57,8 +57,8 @@ const BottomTabNavigator = (): React.ReactElement => {
                 name="favourites"
                 options={{
                     tabBarLabel: 'Избранное',
-                    tabBarIcon: () => (
-                        <TabBarIcon name="heart" color={'red'} />
+                    tabBarIcon: ({color}) => (
+                        <TabBarIcon name="heart" color={color} />
                     )
                 }}
                 component={FavouritesNavigator}
@@ -67,8 +67,8 @@ const BottomTabNavigator = (): React.ReactElement => {
                 name="profile"
                 options={{
                     tabBarLabel: 'Профиль',
-                    tabBarIcon: () => (
-                        <TabBarIcon name="person" color={'red'} />
+                    tabBarIcon: ({color}) => (
+                        <TabBarIcon name="person" color={color} />
                     )
                 }}
                 component={ProfileNavigator}

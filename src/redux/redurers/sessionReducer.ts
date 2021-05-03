@@ -26,13 +26,14 @@ export const actions = {
 
 export const login = (username: string, password: string) => async (dispatch: Dispatch) => {
     try {
-        console.log('username : ', username)
-        // let loggedInUser = await authAPI.login(username,password)
+        // console.log('username : ', username)
+        let loggedInUser = await authAPI.login(username,password)
+        console.log('loggedInUser: ', loggedInUser)
         // if (loggedInUser) {
         //     dispatch(actions.setAuthUserData(loggedInUser))
         // }
-    } catch {
-        console.log(`bad login request with ${username} and ${password}`)
+    } catch(error) {
+        console.log(`bad login request with error: ${error} `)
     }
 }
 

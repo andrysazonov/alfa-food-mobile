@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import BottomTabNavigator from "./BottomTabNavigator"
 import AuthNavigation from "./AuthNavigator";
+import RestaurantNavigation from "./RestaurantNavigator";
 
 
 const Stack = createStackNavigator()
@@ -20,7 +21,7 @@ const RootNavigator = (): React.ReactElement => {
         <Stack.Navigator>
             <Stack.Screen name="Auth" options={screenOptions} component={AuthNavigation} />
             <Stack.Screen name="BottomTab" options={screenOptions} component={BottomTabNavigator} />
-            {/*<Stack.Screen name="Splash" options={screenOptions} component={SplashScreen} />*/}
+            <Stack.Screen name="Restaurant" options={screenOptions} component={RestaurantNavigation} />
         </Stack.Navigator>
     )
 }

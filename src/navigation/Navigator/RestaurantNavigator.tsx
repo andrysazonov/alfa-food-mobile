@@ -7,8 +7,10 @@ const RestaurantStack = createStackNavigator();
 
 
 const RestaurantNavigation = () : React.ReactElement => (
-    <RestaurantStack.Navigator>
-        <RestaurantStack.Screen name="RestaurantMainCard" component={Restaurant}/>
+    <RestaurantStack.Navigator
+        initialRouteName="RestaurantMainCard"
+    >
+        <RestaurantStack.Screen name="RestaurantMainCard" options={{headerShown: false}} component={Restaurant}/>
     </RestaurantStack.Navigator>
 )
 

@@ -1,10 +1,12 @@
 import React from "react"
-import { View, FlatList, Text } from "react-native"
+import {View, FlatList, Text, StyleSheet, Button } from "react-native"
 
 import FavouriteItem from "./components/FavouriteItem";
 
 
-interface Props {}
+interface Props {
+    navigation: any
+}
 
 const FakeData = [
     {
@@ -75,20 +77,66 @@ const FakeData = [
     },
 ]
 
-const FavouritesScreen: React.FC<Props> = () => {
+const FavouritesScreen: React.FC<Props> = ({navigation}) => {
     return (
-        <View>
-            <Text>
-                Избранные рестораны
-            </Text>
-            <FlatList
-                contentContainerStyle={{paddingBottom:15}}
-                data={FakeData}
-                keyExtractor={(item) => item.id}
-                renderItem={FavouriteItem}
-            />
+        <View style={styles.container}>
+            {
+                FakeData.length !== 0 ? (
+                    <>
+                        <Text style={styles.emptyTitle}>
+                            Добавляйте любимые рестораны в избранное
+                        </Text>
+                        <Button
+                            color="green"
+                            title={'Найти рестораны'}
+                            onPress={() => navigation.navigate('search')}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Text>
+                            Избранные рестораны
+                        </Text>
+                        <FlatList
+                            contentContainerStyle={{paddingBottom:15}}
+                            data={FakeData}
+                            keyExtractor={(item) => item.id}
+                            renderItem={FavouriteItem}
+                        />
+                    </>
+                )
+            }
+
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        display: 'flex',
+        flexDirection: 'column'
+
+    },
+    emptyTitle: {
+        alignSelf: 'center',
+        fontSize: 25,
+        fontWeight: 'bold',
+        alignContent: 'center'
+        // width: 200,
+        // flexDirection: 'column',
+
+    },
+    emptyBtn: {
+        borderWidth: 2,
+        backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 14
+    }
+    // header: {
+    //     flexDirection: 'row',
+    //     alignItems: 'center'
+    // }
+})
+
 
 export default FavouritesScreen

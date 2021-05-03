@@ -8,8 +8,10 @@ const Stack = createStackNavigator();
 
 
 const SearchNavigator = (): React.ReactElement => (
-    <Stack.Navigator>
-        <Stack.Screen name="search" options={{title: "Поиск", headerLeft: null}} component={SearchScreen} />
+    <Stack.Navigator
+        initialRouteName={"mainSearch"}
+    >
+        <Stack.Screen name="mainSearch" options={{title: "Поиск", headerLeft: null}} component={SearchScreen} />
     </Stack.Navigator>
 )
 
