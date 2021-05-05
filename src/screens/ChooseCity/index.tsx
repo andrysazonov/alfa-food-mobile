@@ -9,9 +9,11 @@ import Verification from "../Verification";
 interface Props {}
 
 const navigationOptions = () => ({
+    headerBackTitleVisible: false,
     headerTitle: () => (
         <Text>ВЫБЕРИТЕ ГОРОД</Text>
     )
+
 })
 
 

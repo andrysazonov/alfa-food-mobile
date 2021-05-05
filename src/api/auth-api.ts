@@ -1,15 +1,9 @@
 import { instance } from "./index";
-//
-import '../utils/mocks'
+
+import { mock } from "../utils/apicmock";
 
 
 
-// mocks
-
-
-import MockAdapter from "axios-mock-adapter"
-
-var mock = new MockAdapter(instance);
 
 mock.onGet("/restaurants").reply(200, {
     users: [{ id: 1, name: "John Smith" }],
@@ -35,6 +29,8 @@ type CurrentUserDataType = {
 type LoginResponseDataType = {
 
 }
+
+
 
 export const authAPI = {
     login(email: string, password: string, rememberMe?: boolean) {

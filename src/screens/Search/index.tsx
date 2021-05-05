@@ -13,7 +13,7 @@ interface Props {}
 
 const FakeData = [
     {
-        id: 'erer333',
+        id: 'myid',
         title: 'Delmar',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci facilisi ultrices rhoncus, nunc nulla sit at semper a.',
         rating: 10

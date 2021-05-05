@@ -2,6 +2,8 @@ import React from "react"
 import {View, FlatList, Text, StyleSheet, Button } from "react-native"
 
 import FavouriteItem from "./components/FavouriteItem";
+import {RootState} from "../../redux/store";
+import { connect } from "react-redux";
 
 
 interface Props {
@@ -77,11 +79,11 @@ const FakeData = [
     },
 ]
 
-const FavouritesScreen: React.FC<Props> = ({navigation}) => {
+const FavouritesScreen: React.FC<any> = ({navigation, favourites}) => {
     return (
         <View style={styles.container}>
             {
-                FakeData.length !== 0 ? (
+                favourites.length == 0 ? (
                     <>
                         <Text style={styles.emptyTitle}>
                             Добавляйте любимые рестораны в избранное
@@ -99,7 +101,8 @@ const FavouritesScreen: React.FC<Props> = ({navigation}) => {
                         </Text>
                         <FlatList
                             contentContainerStyle={{paddingBottom:15}}
-                            data={FakeData}
+                            data={favourites}
+                            //@ts-ignore
                             keyExtractor={(item) => item.id}
                             renderItem={FavouriteItem}
                         />
@@ -122,9 +125,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         alignContent: 'center'
-        // width: 200,
-        // flexDirection: 'column',
-
     },
     emptyBtn: {
         borderWidth: 2,
@@ -132,11 +132,12 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 14
     }
-    // header: {
-    //     flexDirection: 'row',
-    //     alignItems: 'center'
-    // }
 })
 
 
-export default FavouritesScreen
+const mapStateToProps = (state: RootState) => ({
+    favourites: state.favourites.favourites
+})
+
+export default connect(mapStateToProps)(FavouritesScreen)
+

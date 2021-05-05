@@ -5,14 +5,19 @@ import { Action } from "redux";
 import AsyncStorage from '@react-native-community/async-storage';
 import { persistStore, persistReducer } from "redux-persist"
 import { reducer as formReducer } from "redux-form"
+
+
 import searchReducer from "./redurers/searchReducer";
 import authReducer from "./redurers/sessionReducer";
-
+import favouritesReducer from "./redurers/favouritesReducer";
+import restaurantReducer from "./redurers/restaurantReducer";
 
 let rootReducer = combineReducers({
     auth: authReducer,
     form: formReducer,
-    search: searchReducer
+    search: searchReducer,
+    favourites: favouritesReducer,
+    restaurant: restaurantReducer
 })
 export type RootState = ReturnType<typeof rootReducer>
 

@@ -1,6 +1,6 @@
 import { instance } from "./index";
 //
-import '../utils/mocks'
+import '../utils/apicmock'
 
 
 

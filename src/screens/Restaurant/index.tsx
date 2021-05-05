@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import {
     View,
     Text,
@@ -11,10 +11,15 @@ import {
     ScrollView,
     FlatList, TouchableWithoutFeedback
 } from "react-native"
-import { FontAwesome } from '@expo/vector-icons';
+import { connect } from "react-redux"
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+
+
+
 import DishCard from "./components/DishCard";
-
-
+import {RootState} from "../../redux/store";
+import { actions } from "../../redux/redurers/favouritesReducer";
+import { getCurrentRestaurant } from "../../redux/redurers/restaurantReducer";
 
 interface Props {
     navigation: any,
@@ -73,13 +78,30 @@ const fakeDataDishes = {
 
 
 
-const RestaurantScreen: React.FC<Props> = ({navigation, route}) => {
+const RestaurantScreen = ({navigation, route, favourites, getCurrentRestaurant, addRestaurant, deleteRestaurant, restaurant, favouritesRed}: any) => {
     const { title, restaurantId } = route.params;
+
+    const [isFavourite, setIsFavourite] = useState(favourites[0] && favourites.find((fav: any) => fav.id == restaurantId).length !== 0)
 
 
     useEffect(() => {
         console.log('id is - ', restaurantId)
+        console.log('rest current : ', restaurant)
+        // getCurrentRestaurant(restaurantId)
     }, [restaurantId])
+
+    const handleLike = () => {
+        if (favourites[0] && favourites.find((fav: any) => fav.id == restaurantId).length !== 0) {
+            deleteRestaurant(restaurantId)
+            console.log('delete')
+            setIsFavourite(false)
+        } else {
+            console.log('add and favourites[0] is ', favourites)
+            addRestaurant(restaurant)
+            setIsFavourite(true)
+        }
+    }
+
 
     return (
         <View>
@@ -91,12 +113,20 @@ const RestaurantScreen: React.FC<Props> = ({navigation, route}) => {
                     height: 250,
                 }}
             />
-            <Text>Hello</Text>
+            <View style={styles.descBlock}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.description}>some descr</Text>
+            </View>
 
-            <Text> Param itemId : {title}</Text>
             <Button
                 title={'Забронировать'}
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate('Restaurant', {
+                    screen: 'RestaurantBookingTable',
+                    params: {
+                        title: title,
+                        restaurantId: restaurantId,
+                    }
+                })}
             />
             <View
                 style={styles.goBack}
@@ -106,27 +136,35 @@ const RestaurantScreen: React.FC<Props> = ({navigation, route}) => {
 
                 >
                     <FontAwesome name="close" size={30} color="black" />
-                    {/*<Button*/}
-                    {/*    title={'Go back '}*/}
-                    {/*    onPress={() => navigation.goBack()}*/}
-                    {/*/>*/}
                 </TouchableWithoutFeedback>
 
             </View>
 
-            <ScrollView style={styles.dishContent} keyboardShouldPersistTaps={'handled'}>
+            <View
+                style={styles.heart}
+            >
+                <TouchableWithoutFeedback
+                    onPress={handleLike}
+                >
+                    <Ionicons name="heart" size={32} color={isFavourite ? "red" : "gray"} />
+
+                </TouchableWithoutFeedback>
+
+            </View>
+
+            <ScrollView
+                style={styles.dishContent}
+                keyboardShouldPersistTaps={'handled'}
+                showsVerticalScrollIndicator={false}
+            >
                 <View>
                     <Text style={styles.dishTitle}> Салаты и закуски </Text>
                     <View>
                         <FlatList
+
                             data={fakeDataDishes.salats}
                             renderItem={DishCard}
                         />
-                        {/*{fakeDataDishes.salats.map((item) => (*/}
-                        {/*    <DishCard*/}
-                        {/*        item={item}*/}
-                        {/*    />*/}
-                        {/*))}*/}
                     </View>
                 </View>
                 <View>
@@ -136,11 +174,6 @@ const RestaurantScreen: React.FC<Props> = ({navigation, route}) => {
                             data={fakeDataDishes.salats}
                             renderItem={DishCard}
                         />
-                        {/*{fakeDataDishes.soups.map((item) => (*/}
-                        {/*    <DishCard*/}
-                        {/*        item={item}*/}
-                        {/*    />*/}
-                        {/*))}*/}
                     </View>
                 </View>
             </ScrollView>
@@ -152,7 +185,9 @@ const styles = StyleSheet.create({
     container: {},
     dishContent: {
       marginHorizontal: 20,
-      paddingVertical: 30
+      marginBottom: 50
+      // paddingVertical: 30
+
     },
     banner: {
         marginTop:  Platform.OS === 'ios' ? 25 : StatusBar.currentHeight
@@ -162,11 +197,34 @@ const styles = StyleSheet.create({
       left: 10,
       top: 30,
     },
+    heart: {
+      position: 'absolute',
+      right: 10,
+      top: 30,
+    },
     dishTitle: {
         fontSize: 22,
         fontWeight: 'bold'
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: '500'
+    },
+    description: {
+        fontSize: 14,
+        opacity: 0.8
+    },
+    descBlock: {
+        marginHorizontal: 50,
+        marginVertical: 10
     }
 })
 
 
-export default RestaurantScreen
+const mapStateToProps = (state: RootState) => ({
+  favourites: state.favourites.favourites,
+  favouritesRed: state.favourites,
+  restaurant: state.restaurant.restaurant
+})
+
+export default connect(mapStateToProps, {...actions, getCurrentRestaurant })(RestaurantScreen)
