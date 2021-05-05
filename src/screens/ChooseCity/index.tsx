@@ -3,11 +3,20 @@ import { View, ScrollView, Picker, Button, Text } from "react-native"
 
 
 import { useNavigation } from '@react-navigation/native';
+import Verification from "../Verification";
 
 
 interface Props {}
 
-const ChooseCity: React.FC<Props> = () => {
+const navigationOptions = () => ({
+    headerTitle: () => (
+        <Text>ВЫБЕРИТЕ ГОРОД</Text>
+    )
+})
+
+
+
+const ChooseCity = (): React.ReactElement => {
 
     const navigation = useNavigation()
 
@@ -43,5 +52,7 @@ const ChooseCity: React.FC<Props> = () => {
         </View>
     )
 }
+
+ChooseCity.navigationOptions = navigationOptions
 
 export default ChooseCity

@@ -1,8 +1,9 @@
-import React, { useState } from "react"
-import {View, Text, TextInput, Button, StyleSheet, ScrollView} from "react-native"
-import { reduxForm, Field } from "redux-form";
+import React, { useEffect } from "react"
+import {View, Text, TextInput, Button, StyleSheet, ScrollView, AppState} from "react-native"
+import {reduxForm, Field} from "redux-form";
+import { connect } from "react-redux";
 
-
+import { RootState } from "../../redux/store";
 import {required} from "../../utils/validators";
 
 
@@ -71,6 +72,14 @@ const styles = StyleSheet.create({
 
 
 function PersonalDataForm(props: any) {
+    const values = {
+        username: 'den4ik',
+        phone: '89121212121',
+        city: 'Tambiv'
+    }
+    useEffect(() => {
+        props.initialize(props.loggedInUser)
+    }, [])
     return (
         <ScrollView keyboardShouldPersistTaps={'handled'}>
             <View>
@@ -137,16 +146,28 @@ function NewPasswordForm(props: any) {
 
 
 const NewPasswordFormReduxForm = reduxForm({form: "NewPassword"})(NewPasswordForm)
-const PersonalDataReduxForm = reduxForm({form: "PersonalData"})(PersonalDataForm)
+
+const PersonalDataReduxForm = reduxForm({
+    form: "PersonalData",
+    enableReinitialize : true
+    })(PersonalDataForm)
 
 
 interface Props {
-
+    loggedInUser: {
+        username: string,
+        phone: string,
+        city: string
+        // city: {
+        //     name: string,
+        //     id: string
+        // }
+    }
 }
 
 
 
-const PersonalData: React.FC<Props> = () => {
+const PersonalData: React.FC<any> = ({loggedInUser}) => {
 
     // const [username, setUsername] = useState<string>('Den')
     // const [phone, setPhone] = useState<string>('89121232134')
@@ -164,12 +185,16 @@ const PersonalData: React.FC<Props> = () => {
         console.log('new Password - ', data.password)
     }
 
+    useEffect(() => {
+        console.log('LIU: ', loggedInUser)
+    }, [])
+
     return (
         <View>
             <View>
-                <Text>Form1</Text>
+                <Text>First form</Text>
                 {/*@ts-ignore*/}
-                <PersonalDataReduxForm onSubmit={savePersonalData} />
+                <PersonalDataReduxForm loggedInUser={loggedInUser} onSubmit={savePersonalData} />
 
             </View>
             <View>
@@ -181,7 +206,11 @@ const PersonalData: React.FC<Props> = () => {
     )
 }
 
-export default PersonalData
+const mapStateToProps = (state: RootState) => ({
+    loggedInUser: state.auth.loggedInUser
+})
+
+export default connect(mapStateToProps, null)(PersonalData)
 
 
 

@@ -1,8 +1,11 @@
-import React from "react"
-import {FlatList, View, TextInput, ScrollView} from "react-native"
+import React, {useEffect} from "react"
+import {StyleSheet, View, TextInput, ScrollView} from "react-native"
+
+import { connect } from "react-redux";
 
 import RestaurantCard from "../../components/RestaurantCard"
-
+import {RootState} from "../../redux/store";
+import { actions } from "../../redux/redurers/searchReducer"
 
 
 
@@ -78,17 +81,25 @@ const FakeData = [
 ]
 
 
-const Search: React.FC<Props> = () => {
+const Search: React.FC<any> = (props) => {
+    const { search, setSearchString } = props
+
+
+    useEffect(() => {
+        if (search && search.length > 3) {
+            console.log('I do query')
+        }
+    }, [search])
+
     return (
         <View>
-            <TextInput value={''} onChange={() => console.log('change')} placeholder={'Введите название ресторана'} />
-            {/*<FlatList*/}
-            {/*    contentContainerStyle={{paddingBottom:15}}*/}
-            {/*    data={FakeData}*/}
-            {/*    keyExtractor={(item) => item.id}*/}
-            {/*    renderItem={RestaurantCard}*/}
-            {/*/>*/}
-            <ScrollView>
+            <TextInput
+                style={styles.searchInput}
+                value={search}
+                onChangeText={(text: string) => setSearchString(text)}
+                placeholder={'Введите название ресторана'}
+            />
+            <ScrollView style={styles.scrollBox}>
                 {FakeData.map(data => (
                     <RestaurantCard item={data}/>
                 ))}
@@ -98,4 +109,23 @@ const Search: React.FC<Props> = () => {
 }
 
 
-export default Search
+const styles = StyleSheet.create({
+    searchInput: {
+        marginHorizontal: 20,
+        height: 40,
+        borderColor: "#000000",
+        borderBottomWidth: 1,
+        marginBottom: 5
+    },
+    scrollBox: {
+        marginBottom: 40,
+        paddingBottom: 40
+    }
+})
+
+
+const mapStateToProps = (state: RootState) => ({
+    search: state.search.search
+})
+
+export default connect(mapStateToProps, {...actions})(Search)

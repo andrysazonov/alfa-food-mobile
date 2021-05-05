@@ -4,12 +4,15 @@ import { ThunkAction} from "redux-thunk";
 import { Action } from "redux";
 import AsyncStorage from '@react-native-community/async-storage';
 import { persistStore, persistReducer } from "redux-persist"
-import auth from "./redurers/sessionReducer";
 import { reducer as formReducer } from "redux-form"
+import searchReducer from "./redurers/searchReducer";
+import authReducer from "./redurers/sessionReducer";
+
 
 let rootReducer = combineReducers({
-    auth: auth,
-    form: formReducer
+    auth: authReducer,
+    form: formReducer,
+    search: searchReducer
 })
 export type RootState = ReturnType<typeof rootReducer>
 

@@ -8,10 +8,21 @@ interface Action {
 
 interface State {
     data: any[]
-    loading: boolean
+    loading: boolean,
+    error: string,
+    loggedInUser: {
+        username: string,
+        phone: string,
+        city: string
+    }
 }
 
 const initialState = {
+    loggedInUser: {
+        username: 'k1selevde',
+        phone: '89121212121',
+        city: 'Tambiv'
+    },
     data: [],
     loading: false,
     error: ""
@@ -26,7 +37,6 @@ export const actions = {
 
 export const login = (username: string, password: string) => async (dispatch: Dispatch) => {
     try {
-        // console.log('username : ', username)
         let loggedInUser = await authAPI.login(username,password)
         console.log('loggedInUser: ', loggedInUser)
         // if (loggedInUser) {
@@ -39,14 +49,23 @@ export const login = (username: string, password: string) => async (dispatch: Di
 
 
 export const register = ( email: string, password: string, phone: string, username: string) => async (dispatch: Dispatch) => {
-    try {
-        let loggedInUser = await authAPI.register(email,password, phone, username)
-        if (loggedInUser) {
-            dispatch(actions.setAuthUserData(loggedInUser))
-        }
-    } catch {
-        console.log('some error')
-    }
+    // try {
+    //     let data = await authAPI.register(email,password, phone, username)
+    //     console.log('my logged user: ', data)
+    //     if (data) {
+    //         dispatch(actions.setAuthUserData(data))
+    //     }
+    // } catch (e) {
+    //     console.log('data is ', e)
+    // }
+    authAPI.register(email,password, phone, username)
+        .then((res) => {
+            console.log('res is ', res)
+            // dispatch(actions.setAuthUserData(data))
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 

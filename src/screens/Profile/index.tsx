@@ -17,24 +17,24 @@ const ProfileScreen: React.FC<Props> = () => {
             <View style={styles.section}>
                 <View style={styles.content}>
                     <ProfileItem title='Личные данные' onPress={() => navigation.navigate("personalData")} />
-                    {/*<ProfileItem title='История бронирований' onPress={() => navigation.navigate("bookingHistory")} />*/}
-                    {/*<ProfileItem title='Мои бронирования' onPress={() => navigation.navigate("myBookings")} />*/}
-                    {/*<ProfileItem title='Выйти' onPress={() => navigation.navigate('Auth', { screen: "SignIn"})} />*/}
                 </View>
             </View>
             <View style={styles.section}>
                 <View style={styles.content}>
-                    {/*<ProfileItem title='Личные данные' onPress={() => navigation.navigate("personalData")} />*/}
                     <ProfileItem title='История бронирований' onPress={() => navigation.navigate("bookingHistory")} />
                     <ProfileItem title='Мои бронирования' onPress={() => navigation.navigate("myBookings")} />
-                    {/*<ProfileItem title='Выйти' onPress={() => navigation.navigate('Auth', { screen: "SignIn"})} />*/}
                 </View>
             </View>
             <View style={styles.section}>
                 <View style={styles.content}>
-                    {/*<ProfileItem title='Личные данные' onPress={() => navigation.navigate("personalData")} />*/}
-                    {/*<ProfileItem title='История бронирований' onPress={() => navigation.navigate("bookingHistory")} />*/}
-                    {/*<ProfileItem title='Мои бронирования' onPress={() => navigation.navigate("myBookings")} />*/}
+
+                    <ProfileItem title='Настройки' onPress={() => navigation.navigate("settings")} />
+                    <ProfileItem title='Помощь' onPress={() => navigation.navigate("help")} />
+                </View>
+            </View>
+            <View style={styles.section}>
+                <View style={styles.content}>
+
                     <ProfileItem title='Выйти' onPress={() => navigation.navigate('Auth', { screen: "SignIn"})} />
                 </View>
             </View>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20
     },
     section: {
-        marginVertical: 50,
+        marginVertical: 30,
     }
 })
 

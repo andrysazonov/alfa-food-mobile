@@ -6,7 +6,14 @@ interface Props {
 
 }
 
-const Verification: React.FC<Props> = () => {
+
+const navigationOptions = () => ({
+    headerTitle: () => (
+        <Text>ВЕРИФИКАЦИЯ</Text>
+    )
+})
+
+const Verification = (): React.ReactElement => {
     // const [text, onChangeText] = React.useState("Useless Text");
     const [value, onChangeNumber] = React.useState('');
 
@@ -40,5 +47,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
 });
+
+Verification.navigationOptions = navigationOptions
 
 export default Verification

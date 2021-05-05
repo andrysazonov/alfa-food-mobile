@@ -84,7 +84,10 @@ const styles = StyleSheet.create({
 
 function RegisterForm(props: any) {
     return (
-        <ScrollView keyboardShouldPersistTaps={'handled'}>
+        <ScrollView
+            keyboardShouldPersistTaps={'handled'}
+            showsVerticalScrollIndicator={false}
+        >
             <View>
                 <Text>Username</Text>
                 <Field
@@ -147,8 +150,13 @@ const SignUp = () : React.ReactElement => {
 
 
     const onSubmit = (data: RegisterFormValuesType) => {
-        // dispatch(register(data.email, data.password, data.phone, data.username))
-        navigation.navigate("PhoneVerification")
+        try {
+            dispatch(register(data.email, data.password, data.phone, data.username))
+            navigation.navigate("PhoneVerification")
+        } catch (e) {
+            console.log('something went wrong ', e)
+        }
+
     }
 
     return (

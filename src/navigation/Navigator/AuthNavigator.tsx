@@ -15,8 +15,8 @@ const AuthNavigation = () : React.ReactElement => (
     >
         <LoginStack.Screen name="SignIn" options={SignIn.navigationOptions} component={SignIn}/>
         <LoginStack.Screen name="SignUp" options={SignUp.navigationOptions} component={SignUp} />
-        <LoginStack.Screen name="PhoneVerification" component={Verification} />
-        <LoginStack.Screen name="ChooseCity" component={ChooseCity} />
+        <LoginStack.Screen name="PhoneVerification" options={Verification.navigationOptions} component={Verification} />
+        <LoginStack.Screen name="ChooseCity" options={ChooseCity.navigationOptions} component={ChooseCity} />
     </LoginStack.Navigator>
 )
 
